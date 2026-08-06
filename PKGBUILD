@@ -1,6 +1,6 @@
 # Maintainer: Andreas Radke <andyrtr@archlinux.org>
 
-pkgbase=linux-lts
+pkgbase=linux-lts_bc-250
 pkgver=6.18.41
 pkgrel=1
 pkgdesc='LTS Linux'
@@ -47,6 +47,7 @@ source=(
   0001-add-sysctl-to-allow-disabling-unprivileged-CLONE_NEW.patch
   0002-drm-amdgpu-avoid-memory-allocation-in-the-critical-c.patch
   0003-drm-amdgpu-use-GFP_ATOMIC-instead-of-NOWAIT-in-the-c.patch
+  bc250-40cu-amdgpu.patch  
 )
 source_x86_64=(config.x86_64)
 validpgpkeys=(
@@ -57,13 +58,15 @@ sha256sums=('17fc72f0f8d4a8a8633a5d20085f5d9c5a5ec51ee896a0b7ae1ec25da31273ea'
             'SKIP'
             '0bb3b4cda53db35c10e0a34defb5f52f3c91895d7b4a9f93b3f40f5401a71e02'
             '70d54dfde13e52ea1109c4222a987a29ada68feec35dca9ce4afd6f7977e8740'
-            '44caa7c6a79055539f16ab118bece58934cdf93557643a50017634366c864b91')
+            '44caa7c6a79055539f16ab118bece58934cdf93557643a50017634366c864b91'
+            '950add8c0c15c5694def339c87e6a5d1d65d7ae8a03002519a25ac23bdb575ed')
 sha256sums_x86_64=('2cb0dd2017ca74008d724362c96439403124644ff0f17d6b70d19c79e8c1aee8')
 b2sums=('004e68e62fc813cef33b08c993c5a7164a578e68195ba831c4cd654e8624004049e9486ec96ed7e5dbb9f983a06ba2ec4a624adeb01339ed690d4990c39449bd'
         'SKIP'
         'f98f4a2e714f7c9e05740caaad2bf014065ec950c096df74a3dee8b2ce6549f034adf6f87a76168f513aa68eb738edbdb6fe1a3f1b3a5104201c65199b5b931e'
         '6ca246df80fa85f9c21d090f87ee31e33acb02f3c1147944750e0896ebf199bc0cf427a164dacbdd9baa26dbdbce2fabd89ebdb6a8ce5dae83fc455b27a56cc8'
-        'a612d5ea58485eeaa5cce0b30074ab3188f4321c4759448780de2f3f656821356d640df433e31bd4e8f2c9719c8e275374ddea29b9504335ed0981be5ac7bf7b')
+        'a612d5ea58485eeaa5cce0b30074ab3188f4321c4759448780de2f3f656821356d640df433e31bd4e8f2c9719c8e275374ddea29b9504335ed0981be5ac7bf7b'
+        'ce33e1509df5c17983e8abe7997df896ea95f8565996fc440be2c4d5a3f25b2a676d3d6370cf29eb7d2178acb2eb76c31c2ee0d9563d05215d2340203f64df51')
 b2sums_x86_64=('a4891a11e75dc7a1f4fd81390da18822c09d8bdb45b5ffe42c145db035503529e7b5d25e03e69bd248377b77d4802a9861cc3bcc0103ba31da7b10d48ccbc51e')
 
 # https://www.kernel.org/pub/linux/kernel/v6.x/sha256sums.asc
@@ -91,9 +94,17 @@ prepare() {
 
   echo "Setting config..."
   cp ../config.$CARCH .config
-  make olddefconfig
+  #make olddefconfig
+  
+  make nconfig
+  make prepare
+
   diff -u ../config.$CARCH .config || :
   
+  echo "$PWD"
+
+  make LSMOD=../../../../modprobed/minimal-modprobed.db localmodconfig </dev/null
+
   make -s kernelrelease > version
   echo "Prepared $pkgbase version $(<version)"
 }
@@ -101,12 +112,12 @@ prepare() {
 build() {
   cd $_srcname
 
-  make htmldocs SPHINXOPTS=-QT &
+  #make htmldocs SPHINXOPTS=-QT &
   local pid_docs=$!
 
   make all
   make -C tools/bpf/bpftool vmlinux.h feature-clang-bpf-co-re=1
-  wait $pid_docs
+  #wait $pid_docs
 }
 
 _package() {
@@ -417,7 +428,7 @@ _package-docs() {
 pkgname=(
   "$pkgbase"
   "$pkgbase-headers"
-  "$pkgbase-docs"
+  #"$pkgbase-docs"
 )
 for _p in "${pkgname[@]}"; do
   eval "package_$_p() {

@@ -1,7 +1,12 @@
 # Maintainer: Andreas Radke <andyrtr@archlinux.org>
 
+<<<<<<< HEAD
 pkgbase=linux-lts_bc-250
+pkgver=6.18.41
+=======
+pkgbase=linux-lts
 pkgver=6.18.42
+>>>>>>> origin/main
 pkgrel=1
 pkgdesc='LTS Linux'
 url='https://www.kernel.org'

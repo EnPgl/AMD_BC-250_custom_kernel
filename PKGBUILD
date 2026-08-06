@@ -100,10 +100,8 @@ prepare() {
   make prepare
 
   diff -u ../config.$CARCH .config || :
-  
-  echo "$PWD"
 
-  make LSMOD=../../../../modprobed/minimal-modprobed.db localmodconfig </dev/null
+  make LSMOD=../../modprobed/minimal-modprobed.db localmodconfig </dev/null
 
   make -s kernelrelease > version
   echo "Prepared $pkgbase version $(<version)"

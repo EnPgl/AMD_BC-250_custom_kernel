@@ -5,7 +5,7 @@ A customized version of the Arch Linux kernel for the [AMD BC-250](https://elekt
 ## Table of Contents
 - [Kernel Modules](#kernel-modules)
 - [Patches](#patches)
-- [Build and Install](build-and-install)
+- [Build and Install](#build-and-install)
 
 ## Kernel Modules
 - The list of modules included in the kernel compilation is based on that of [linux-tkg](https://github.com/Frogging-Family/linux-tkg), with modifications made based on the results of [modprobed-db](https://github.com/graysky2/modprobed-db) and personal usage experience.

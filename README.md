@@ -14,7 +14,7 @@ A customized version of the Arch Linux kernel for the [AMD BC-250](https://elekt
 - **40 CU Unlock**: from [duggasco/bc250-40cu-unlock](https://github.com/duggasco/bc250-40cu-unlock)
 
 ## Build and Install
-For more information about buildind the kernel using the [Arch build system](https://wiki.archlinux.org/title/Arch_build_system, check the relative page on the [wiki](https://wiki.archlinux.org/title/Kernel/Arch_build_system).
+For more information about buildind the kernel using the [Arch build system](https://wiki.archlinux.org/title/Arch_build_system), check the relative page on the [wiki](https://wiki.archlinux.org/title/Kernel/Arch_build_system).
 
 ### Building yourself
 - clone the repository and cd into it
@@ -22,4 +22,6 @@ For more information about buildind the kernel using the [Arch build system](htt
 
 
 ### Installing
-- after the build (or if you have decide to download the files from the releases), simply install them by running `# pacman -U linux-lts_bc-250-headers-version_number-x86_64.pkg.tar.zst linux-lts_bc-250-version_number-x86_64.pkg.tar.zst`
+After the build (or if you have decide to download the files from the releases), simply install them by running
+
+`# pacman -U linux-lts_bc-250-headers-version_number-x86_64.pkg.tar.zst linux-lts_bc-250-version_number-x86_64.pkg.tar.zst`

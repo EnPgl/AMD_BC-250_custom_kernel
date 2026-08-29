@@ -1,6 +1,6 @@
 # Maintainer: Andreas Radke <andyrtr@archlinux.org>
 
-pkgbase=linux-lts
+pkgbase=linux-lts_bc-250
 pkgver=6.18.54
 pkgrel=1
 pkgdesc='LTS Linux'
@@ -47,6 +47,7 @@ source=(
   0001-add-sysctl-to-allow-disabling-unprivileged-CLONE_NEW.patch
   0002-drm-amdgpu-avoid-memory-allocation-in-the-critical-c.patch
   0003-drm-amdgpu-use-GFP_ATOMIC-instead-of-NOWAIT-in-the-c.patch
+  bc250-40cu-amdgpu.patch
 )
 source_x86_64=(config.x86_64)
 validpgpkeys=(
@@ -90,8 +91,14 @@ prepare() {
 
   echo "Setting config..."
   cp ../config.$CARCH .config
-  make olddefconfig
+  #make olddefconfig
+
+  make nconfig
+  make prepare
+
   diff -u ../config.$CARCH .config || :
+
+  make LSMOD=../../modprobed/minimal-modprobed.db localmodconfig </dev/null
 
   make -s kernelrelease > version
   echo "Prepared $pkgbase version $(<version)"
@@ -100,12 +107,12 @@ prepare() {
 build() {
   cd $_srcname
 
-  make htmldocs SPHINXOPTS=-QT &
+  #make htmldocs SPHINXOPTS=-QT &
   local pid_docs=$!
 
   make all
   make -C tools/bpf/bpftool vmlinux.h feature-clang-bpf-co-re=1
-  wait $pid_docs
+  #wait $pid_docs
 }
 
 _package() {
@@ -416,7 +423,7 @@ _package-docs() {
 pkgname=(
   "$pkgbase"
   "$pkgbase-headers"
-  "$pkgbase-docs"
+  #"$pkgbase-docs"
 )
 for _p in "${pkgname[@]}"; do
   eval "package_$_p() {

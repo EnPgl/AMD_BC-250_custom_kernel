@@ -91,13 +91,14 @@ prepare() {
 
   echo "Setting config..."
   cp ../config.$CARCH .config
-  #make olddefconfig
 
-  make nconfig
+  make olddefconfig
+  #make nconfig
+
   make prepare
 
   diff -u ../config.$CARCH .config || :
-
+  
   make LSMOD=../../modprobed/minimal-modprobed.db localmodconfig </dev/null
 
   make -s kernelrelease > version

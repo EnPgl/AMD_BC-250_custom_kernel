@@ -1,6 +1,6 @@
 # Arch Linux Kernel Custom for AMD BC-250
 
-A customized version of the Arch Linux kernel for the [AMD BC-250](https://elektricm.github.io/amd-bc250-docs/#what-is-the-bc250), with some patch and stripped of unused modules.
+A customized version of the Arch Linux kernel for the [AMD BC-250](https://elektricm.github.io/amd-bc250-docs/#what-is-the-bc250), with some patches and stripped of unused modules.
 
 ## Table of Contents
 - [Kernel Modules](#kernel-modules)

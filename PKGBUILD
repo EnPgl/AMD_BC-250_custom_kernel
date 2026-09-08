@@ -2,7 +2,7 @@
 
 pkgbase=linux-lts_bc-250
 pkgver=6.18.50
-pkgrel=1
+pkgrel=2
 pkgdesc='LTS Linux'
 url='https://www.kernel.org'
 arch=(
